@@ -228,9 +228,9 @@ func RegisterUserServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_UserService_AddCategory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "categories"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_UserService_AddCategory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "categories"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_UserService_ListCategories_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "categories"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_UserService_ListCategories_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "categories"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

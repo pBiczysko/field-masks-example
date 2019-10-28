@@ -20,14 +20,14 @@ service UserService {
   rpc AddCategory(AddCategoryRequest) returns (AddCategoryResponse) {
     option (google.api.http) = {
       // Route to this method from POST requests to /api/categories
-      post: "/api/categories"
+      post: "/api/v1/categories"
       body: "*"
     };
   }
   rpc ListCategories(ListCategoryRequest) returns (ListCategoryResponse) {
     option (google.api.http) = {
       // Route to this method from GET requests to /api/categories
-      get: "/api/categories"
+      get: "/api/v1/categories"
     };
   }
 }
