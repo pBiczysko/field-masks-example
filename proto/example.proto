@@ -4,6 +4,7 @@ package example;
 
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
+import "google/protobuf/wrappers.proto";
 
 // Defines the import path that should be used to import the generated package,
 // and the package name.
@@ -60,9 +61,9 @@ message ListCategoryResponse {
 
 message UpdateCategoryRequest {
   string id = 1;
-  string name = 2;
-  int32 price = 3;
-  string external_id = 4;
+  google.protobuf.StringValue name = 2;
+  google.protobuf.Int32Value price = 3;
+  google.protobuf.StringValue external_id = 4;
 }
 
 message UpdateCategoryResponse {
