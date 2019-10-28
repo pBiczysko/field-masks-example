@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	"github.com/gofrs/uuid"
+	"github.com/golang/protobuf/ptypes/wrappers"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -71,11 +72,25 @@ func (b *Backend) UpdateCategory(ctx context.Context, in *pb.UpdateCategoryReque
 		return nil, status.Errorf(codes.NotFound, "category %q not found", in.GetId())
 	}
 
-	out.Name = in.GetName()
-	out.Price = in.GetPrice()
-	out.ExternalId = in.GetExternalId()
+	updateStringIfPresent(&out.Name, in.GetName())
+	updateInt32IfPresent(&out.Price, in.GetPrice())
+	updateStringIfPresent(&out.ExternalId, in.GetExternalId())
 
 	return &pb.UpdateCategoryResponse{
 		Category: out,
 	}, nil
+}
+
+func updateStringIfPresent(in *string, w *wrappers.StringValue) {
+	if w != nil {
+		*in = w.GetValue()
+	}
+	return
+}
+
+func updateInt32IfPresent(in *int32, w *wrappers.Int32Value) {
+	if w != nil {
+		*in = w.GetValue()
+	}
+	return
 }
