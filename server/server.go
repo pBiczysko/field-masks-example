@@ -5,6 +5,8 @@ import (
 	"sync"
 
 	"github.com/gofrs/uuid"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	pb "github.com/pBiczysko/field-masks-example/proto"
 )
@@ -51,5 +53,29 @@ func (b *Backend) ListCategories(ctx context.Context, _ *pb.ListCategoryRequest)
 
 	return &pb.ListCategoryResponse{
 		Categories: out,
+	}, nil
+}
+
+// UpdateCategory updates given category in the store.
+func (b *Backend) UpdateCategory(ctx context.Context, in *pb.UpdateCategoryRequest) (*pb.UpdateCategoryResponse, error) {
+	id := in.GetId()
+	var out *pb.Category
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	for _, cat := range b.categories {
+		if cat.GetId() == id {
+			out = cat
+		}
+	}
+	if out == nil {
+		return nil, status.Errorf(codes.NotFound, "category %q not found", in.GetId())
+	}
+
+	out.Name = in.GetName()
+	out.Price = in.GetPrice()
+	out.ExternalId = in.GetExternalId()
+
+	return &pb.UpdateCategoryResponse{
+		Category: out,
 	}, nil
 }
