@@ -29,9 +29,9 @@ func (b *Backend) AddCategory(ctx context.Context, in *pb.AddCategoryRequest) (*
 
 	cat := &pb.Category{
 		Id:         uuid.Must(uuid.NewV4()).String(),
-		Name:       in.Category.GetName(),
-		Price:      in.Category.GetPrice(),
-		ExternalId: in.Category.GetExternalId(),
+		Name:       in.GetName(),
+		Price:      in.GetPrice(),
+		ExternalId: in.GetExternalId(),
 	}
 	b.categories = append(b.categories, cat)
 
