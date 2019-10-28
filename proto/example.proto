@@ -30,6 +30,13 @@ service CategoryService {
       get: "/api/v1/categories"
     };
   }
+  rpc UpdateCategory(UpdateCategoryRequest) returns (UpdateCategoryResponse) {
+    option (google.api.http) = {
+      // Route to this method from PATCH requests to /api/categories
+      patch: "/api/v1/categories/{id}"
+      body: "*"
+    };
+  }
 }
 
 message Category {
@@ -56,4 +63,15 @@ message ListCategoryRequest {
 
 message ListCategoryResponse {
   repeated Category categories = 1;
+}
+
+message UpdateCategoryRequest {
+  string id = 1;
+  string name = 2;
+  int32 price = 3;
+  string external_id = 4;
+}
+
+message UpdateCategoryResponse {
+  Category category = 1;
 }
