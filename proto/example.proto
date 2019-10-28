@@ -1,0 +1,56 @@
+syntax="proto3";
+
+package example;
+
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+// Defines the import path that should be used to import the generated package,
+// and the package name.
+option go_package = "github.com/pBiczysko/field-masks-example/proto;example";
+
+// These annotations are used when generating the swagger file.
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    version: "1.0";
+  };
+};
+
+service UserService {
+  rpc AddCategory(AddCategoryRequest) returns (AddCategoryResponse) {
+    option (google.api.http) = {
+      // Route to this method from POST requests to /api/categories
+      post: "/api/categories"
+      body: "*"
+    };
+  }
+  rpc ListCategories(ListCategoryRequest) returns (ListCategoryResponse) {
+    option (google.api.http) = {
+      // Route to this method from GET requests to /api/categories
+      get: "/api/categories"
+    };
+  }
+}
+
+message AddCategoryRequest {
+  Category category = 1;
+}
+
+message AddCategoryResponse {
+  Category category = 1;
+}
+
+message ListCategoryRequest {
+  repeated Category categories = 2;
+}
+
+message ListCategoryResponse {
+  repeated Category categories = 2;
+}
+
+message Category {
+  string id = 1;
+  string name = 2;
+  int32 price = 3;
+  string external_id = 4;
+}
