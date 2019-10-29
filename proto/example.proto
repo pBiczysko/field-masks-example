@@ -43,7 +43,7 @@ service CategoryService {
     option (google.api.http) = {
       // Route to this method from PATCH requests to /api/v2/categories
       patch: "/api/v2/categories/{category.id}"
-      body: "*"
+      body: "category"
     };
   }
 }
