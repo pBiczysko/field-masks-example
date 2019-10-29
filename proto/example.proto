@@ -40,6 +40,14 @@ service UserService {
   }
 }
 
+message Category {
+  string id = 1;
+  string name = 2;
+  int32 price = 3;
+  string external_id = 4;
+  AdditionalPriceRule additional_price_rule = 5;
+}
+
 message AddCategoryRequest {
   string id = 1;
   string name = 2;
@@ -64,15 +72,14 @@ message UpdateCategoryRequest {
   google.protobuf.StringValue name = 2;
   google.protobuf.Int32Value price = 3;
   google.protobuf.StringValue external_id = 4;
+  AdditionalPriceRule additional_price_rule = 5;
 }
 
 message UpdateCategoryResponse {
   Category category = 1;
 }
 
-message Category {
-  string id = 1;
-  string name = 2;
-  int32 price = 3;
-  string external_id = 4;
+message AdditionalPriceRule {
+  string condition = 1;
+  int32 price = 2;
 }
