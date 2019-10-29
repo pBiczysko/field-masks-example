@@ -45,6 +45,12 @@ message Category {
   string name = 2;
   int32 price = 3;
   string external_id = 4;
+  AdditionalPriceRule additional_price_rule = 5;
+}
+
+message AdditionalPriceRule {
+  string condition = 1;
+  int32 price = 2;
 }
 
 message AddCategoryRequest {
@@ -71,6 +77,7 @@ message UpdateCategoryRequest {
   google.protobuf.StringValue name = 2;
   google.protobuf.Int32Value price = 3;
   google.protobuf.StringValue external_id = 4;
+  AdditionalPriceRule additional_price_rule = 5;
 }
 
 message UpdateCategoryResponse {
