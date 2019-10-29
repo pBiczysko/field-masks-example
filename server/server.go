@@ -75,6 +75,9 @@ func (b *Backend) UpdateCategory(ctx context.Context, in *pb.UpdateCategoryReque
 	updateStringIfPresent(&out.Name, in.GetName())
 	updateInt32IfPresent(&out.Price, in.GetPrice())
 	updateStringIfPresent(&out.ExternalId, in.GetExternalId())
+	if in.GetAdditionalPriceRule() != nil {
+		out.AdditionalPriceRule = in.GetAdditionalPriceRule()
+	}
 
 	return &pb.UpdateCategoryResponse{
 		Category: out,
