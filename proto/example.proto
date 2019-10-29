@@ -16,7 +16,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
   };
 };
 
-service UserService {
+service CategoryService {
   rpc AddCategory(AddCategoryRequest) returns (AddCategoryResponse) {
     option (google.api.http) = {
       // Route to this method from POST requests to /api/categories
@@ -32,6 +32,13 @@ service UserService {
   }
 }
 
+message Category {
+  string id = 1;
+  string name = 2;
+  int32 price = 3;
+  string external_id = 4;
+}
+
 message AddCategoryRequest {
   string id = 1;
   string name = 2;
@@ -44,16 +51,9 @@ message AddCategoryResponse {
 }
 
 message ListCategoryRequest {
-  repeated Category categories = 2;
+  repeated Category categories = 1;
 }
 
 message ListCategoryResponse {
-  repeated Category categories = 2;
-}
-
-message Category {
-  string id = 1;
-  string name = 2;
-  int32 price = 3;
-  string external_id = 4;
+  repeated Category categories = 1;
 }

@@ -30,7 +30,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	pbExample.RegisterUserServiceServer(s, server.New())
+	pbExample.RegisterCategoryServiceServer(s, server.New())
 
 	// Serve gRPC Server
 	log.Info("Serving gRPC on http://", addr)
@@ -61,7 +61,7 @@ func main() {
 	gwmux := runtime.NewServeMux(
 		runtime.WithMarshalerOption(runtime.MIMEWildcard, jsonpb),
 	)
-	err = pbExample.RegisterUserServiceHandler(context.Background(), gwmux, conn)
+	err = pbExample.RegisterCategoryServiceHandler(context.Background(), gwmux, conn)
 	if err != nil {
 		log.Fatalln("Failed to register gateway:", err)
 	}
