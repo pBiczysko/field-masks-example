@@ -5,6 +5,7 @@ package example;
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 import "google/protobuf/wrappers.proto";
+import "google/protobuf/field_mask.proto";
 
 // Defines the import path that should be used to import the generated package,
 // and the package name.
@@ -27,14 +28,21 @@ service CategoryService {
   }
   rpc ListCategories(ListCategoryRequest) returns (ListCategoryResponse) {
     option (google.api.http) = {
-      // Route to this method from GET requests to /api/categories
+      // Route to this method from GET requests to /api/v1/categories
       get: "/api/v1/categories"
     };
   }
   rpc UpdateCategory(UpdateCategoryRequest) returns (UpdateCategoryResponse) {
     option (google.api.http) = {
-      // Route to this method from PATCH requests to /api/categories
+      // Route to this method from PATCH requests to /api/v1/categories
       patch: "/api/v1/categories/{id}"
+      body: "*"
+    };
+  }
+  rpc UpdateCategoryV2(UpdateCategoryV2Request) returns (UpdateCategoryV2Response) {
+    option (google.api.http) = {
+      // Route to this method from PATCH requests to /api/v2/categories
+      patch: "/api/v2/categories/{category.id}"
       body: "*"
     };
   }
@@ -48,7 +56,7 @@ message Category {
   AdditionalPriceRule additional_price_rule = 5;
 }
 
-message AdditionalPriceRule {
+message AdditionalPriceRule{
   string condition = 1;
   int32 price = 2;
 }
@@ -81,5 +89,14 @@ message UpdateCategoryRequest {
 }
 
 message UpdateCategoryResponse {
+  Category category = 1;
+}
+
+message UpdateCategoryV2Request {
+  Category category = 1;
+  google.protobuf.FieldMask update_mask = 2; 
+}
+
+message UpdateCategoryV2Response {
   Category category = 1;
 }

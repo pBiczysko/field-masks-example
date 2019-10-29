@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"log"
 	"sync"
 
 	"github.com/gofrs/uuid"
@@ -80,6 +81,28 @@ func (b *Backend) UpdateCategory(ctx context.Context, in *pb.UpdateCategoryReque
 	}
 
 	return &pb.UpdateCategoryResponse{
+		Category: out,
+	}, nil
+}
+
+// UpdateCategoryV2 updates given category in the store using field masks.
+func (b *Backend) UpdateCategoryV2(ctx context.Context, in *pb.UpdateCategoryV2Request) (*pb.UpdateCategoryV2Response, error) {
+	id := in.GetCategory().GetId()
+	var out *pb.Category
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	for _, cat := range b.categories {
+		if cat.GetId() == id {
+			out = cat
+		}
+	}
+	if out == nil {
+		return nil, status.Errorf(codes.NotFound, "category %q not found", in.GetCategory().GetId())
+	}
+	log.Println("Update mask:", in.GetUpdateMask())
+	applyFieldMask(out, in.GetCategory(), in.GetUpdateMask())
+
+	return &pb.UpdateCategoryV2Response{
 		Category: out,
 	}, nil
 }

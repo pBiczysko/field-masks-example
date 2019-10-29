@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/gofrs/uuid v3.2.0+incompatible
+	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/golang/protobuf v1.3.2
 	github.com/grpc-ecosystem/grpc-gateway v1.11.3
 	github.com/rakyll/statik v0.1.6
